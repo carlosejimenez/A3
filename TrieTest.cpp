@@ -32,14 +32,27 @@ int main(int argc, char *argv[]){
     }
     
     for(unsigned int i = 0; i < word_list.size(); i++){
-        cout << i+1 << endl;
-        cout << word_list[i] << " is " << boolalpha << first_tree.isAWord(word_list[i]) << endl;
+        //cout << i+1 << endl;
+        //cout << word_list[i] << " is " << boolalpha << first_tree.isAWord(word_list[i]) << endl;
     }
 
-    vector<string> prefix_list = *first_tree.allWordsStartingWithPrefix(filename2);
+    vector<string> prefix_list = first_tree.allWordsStartingWithPrefix(filename2);
 
     for(unsigned int i = 0; i < prefix_list.size(); i++){
         cout << prefix_list[i] << "\n";
     }
+
+    Trie second_tree = first_tree;
+
+    cout << "\nAdding new word.\n\n";
+
+    first_tree.addAWord("zanzibar");
+
+    prefix_list = second_tree.allWordsStartingWithPrefix(filename2);
+
+    for(unsigned int i = 0; i < prefix_list.size(); i++){
+        cout << prefix_list[i] << "\n";
+    }
+
     return 0; 
 }

@@ -6,31 +6,41 @@
 
 Trie::Trie(){
     ending = false;
-    branches = new Trie*[26];
     for (int i = 0; i < 26; i++){
         branches[i] = nullptr;
     }
 }
 
 Trie::Trie(Trie& other){
-    ;
+    ending = other.ending;
+    for (int i = 0; i < 26; i++){
+        branches[i] = new Trie(*other.branches[i]);
+    }
 }
 
 Trie::~Trie(){
-    delete [] branches;
+    for (int i = 0; i < 26; i++){
+        delete branches[i];
+    }
 }
 
 int index(char letter){
+
     return (letter % 97);
 }
 
 char letter(int i){
+
     return (char(i+97));
 }
 
 Trie& Trie::operator=(Trie& other){
+    std::swap(ending, other.ending);
 
-    return other;
+    for (int i = 0; i < 26; i++){
+        std::swap(branches[i], other.branches[i]);
+    }
+    return *this;
 }
 
 void Trie::addAWord(std::string word){
@@ -46,6 +56,7 @@ void Trie::addAWord(std::string word){
     }
     
     branches[index(letter)]->addAWord(word.substr(1, word.length()));
+
     return;
 }
 
@@ -64,33 +75,35 @@ bool Trie::isAWord(std::string word){
     }
 }
 
-std::vector<std::string>* Trie::allWordsStartingWithPrefix(std::string word){
+std::vector<std::string> Trie::allWordsStartingWithPrefix(std::string word){
     if (word == ""){
-        std::vector<std::string>* word_vector = new std::vector<std::string>();
+        std::vector<std::string> word_vector;
         if (ending){
-            word_vector->push_back("");
+            word_vector.push_back("");
         }
         for (int i = 0; i < 26; i++){
             if (branches[i] != nullptr){
-                std::vector<std::string> sub_vector = *branches[i]->allWordsStartingWithPrefix("");
+                std::vector<std::string> sub_vector = branches[i]->allWordsStartingWithPrefix("");
                 for (unsigned int p = 0; p < sub_vector.size(); p++){
-                    word_vector->push_back(std::string(1, letter(i)) + sub_vector[p]);
+                    word_vector.push_back(std::string(1, letter(i)) + sub_vector[p]);
                 }
             }
         }
+
         return word_vector;
     }
     else{
-        std::vector<std::string>* word_vector = new std::vector<std::string>();
+        std::vector<std::string> word_vector;
         if(branches[index(word[0])] == nullptr){
             return word_vector;
         }
 
-        std::vector<std::string> sub_vector = *branches[index(word[0])]->allWordsStartingWithPrefix(word.substr(1, word.length()));
+        std::vector<std::string> sub_vector = branches[index(word[0])]->allWordsStartingWithPrefix(word.substr(1, word.length()));
         for (unsigned int p = 0; p < sub_vector.size(); p++){
             std::string partial = word[0] + (sub_vector[p]);;
-            word_vector->push_back(partial);
+            word_vector.push_back(partial);
         }
+
         return word_vector;
     }
 }

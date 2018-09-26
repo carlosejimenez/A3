@@ -5,7 +5,7 @@
 
 class Trie{
 private:
-    Trie** branches;
+    Trie* branches[26];
     bool ending;
 
 public:
@@ -17,7 +17,7 @@ public:
 
     void addAWord(std::string);
     bool isAWord(std::string);
-    std::vector<std::string>* allWordsStartingWithPrefix(std::string);
+    std::vector<std::string> allWordsStartingWithPrefix(std::string);
 
 };
 
