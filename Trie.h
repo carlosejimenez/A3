@@ -33,6 +33,8 @@ public:
 
     // isAWord returns true if string input is a word in the trie.
     bool isAWord(std::string);
+
+   std::vector<std::string> wordsWithWildcardPrefix(std::string);
 };
 
 #endif
