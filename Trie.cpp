@@ -1,8 +1,22 @@
-#include <string>
+//	Name: Carlos Jimenez (u1200220) - 09/26/2018
+// CS3505 - Assignment A3
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include"Trie.h"
+
+// Helper functions to convert char to acceptable int index.
+int index(char letter){
+
+    return (letter % 97);
+}
+
+// Helper functions to convert int index to an acceptable char.
+char letter(int i){
+
+    return (char(i+97));
+}
 
 Trie::Trie(){
     ending = false;
@@ -11,34 +25,27 @@ Trie::Trie(){
     }
 }
 
-Trie::Trie(Trie& other){
-    ending = other.ending;
-    for (int i = 0; i < 26; i++){
+Trie::Trie(Trie& other) : ending(other.ending), branches(){
+    for(int i = 0; i < 26; i++){
+      if(other.branches[i] != nullptr){
         branches[i] = new Trie(*other.branches[i]);
+      }
     }
 }
 
 Trie::~Trie(){
     for (int i = 0; i < 26; i++){
         delete branches[i];
+        branches[i] = nullptr;
     }
 }
 
-int index(char letter){
+Trie& Trie::operator=(Trie other){
+    using std::swap;
 
-    return (letter % 97);
-}
-
-char letter(int i){
-
-    return (char(i+97));
-}
-
-Trie& Trie::operator=(Trie& other){
-    std::swap(ending, other.ending);
-
+    swap(this->ending, other.ending);
     for (int i = 0; i < 26; i++){
-        std::swap(branches[i], other.branches[i]);
+        swap(this->branches[i], other.branches[i]);
     }
     return *this;
 }
@@ -54,7 +61,7 @@ void Trie::addAWord(std::string word){
     if (branches[index(letter)] == nullptr){
         branches[index(letter)] = new Trie();
     }
-    
+
     branches[index(letter)]->addAWord(word.substr(1, word.length()));
 
     return;
@@ -76,6 +83,8 @@ bool Trie::isAWord(std::string word){
 }
 
 std::vector<std::string> Trie::allWordsStartingWithPrefix(std::string word){
+    // If word is empty, we want to add the current position to the return value, if this-> ending is true.
+    // And continue adding all relevant words beneath this.
     if (word == ""){
         std::vector<std::string> word_vector;
         if (ending){
@@ -93,6 +102,8 @@ std::vector<std::string> Trie::allWordsStartingWithPrefix(std::string word){
         return word_vector;
     }
     else{
+
+        // Else, we want to only add relevant words corresponding to the next value in the prefix.
         std::vector<std::string> word_vector;
         if(branches[index(word[0])] == nullptr){
             return word_vector;

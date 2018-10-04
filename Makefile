@@ -1,10 +1,12 @@
+#	Name: Carlos Jimenez (u1200220) - 09/26/2018
+# CS3505 - Assignment A3
 CC      = g++
-FLAGS = -pedantic -pedantic-errors -Wall -Wextra -fsanitize=address -fsanitize=undefined -g
+FLAGS = -pedantic -Wall -fsanitize=address -fsanitize=undefined
 
 TrieTest: TrieTest.o Trie.o
-	$(CC) $(FLAGS) -o newtest.out TrieTest.o Trie.o
+	$(CC) $(FLAGS) -o TrieTest.out TrieTest.o Trie.o
 
-TrieTest.o: TrieTest.cpp Trie.h
+TrieTest.o: TrieTest.cpp
 	$(CC) $(FLAGS) -c TrieTest.cpp
 
 Trie.o: Trie.cpp Trie.h 
@@ -12,4 +14,4 @@ Trie.o: Trie.cpp Trie.h
 
 clean:
 	rm -rf *.o
-	rm -rf newtest.out
+	rm -rf TrieTest.out
