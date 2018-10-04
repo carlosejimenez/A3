@@ -118,3 +118,7 @@ std::vector<std::string> Trie::allWordsStartingWithPrefix(std::string word){
         return word_vector;
     }
 }
+
+std::vector<std::string> wordsWithWildcardPrefix(std::string){
+    return std::vector<std::string>();
+}
