@@ -26,6 +26,9 @@ clean:
 	rm -rf TrieTest.out
 	rm -rf TrieTests.out
 
+test:
+	./TrieTests.out
+
 # TrieTest: ./build/TrieTest.o ./build/Trie.o
 # 	$(CC) $(FLAGS) -o ./bin/TrieTest.out $(BUILDDIR)/TrieTest.o $(BUILDDIR)/Trie.o
 #
