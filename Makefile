@@ -8,7 +8,7 @@ TrieTests: TrieTests.cpp TrieTest.o Trie.o
 	$(CC) $(FLAGS) -isystem ${GOOGLETEST}/include -I${GOOGLETEST} \
     -pthread -c ${GOOGLETEST}/src/gtest-all.cc
 		ar -rv libgtest.a gtest-all.o
-	$(CC) $(FLAGS) -isystem ${GOOGLETEST}/include -pthread ./TrieTests.cpp libgtest.a \
+	$(CC) $(FLAGS) -isystem ${GOOGLETEST}/include -pthread ./TrieTests.cpp ./Trie.o libgtest.a \
     -o TrieTests.out
 
 
@@ -24,6 +24,7 @@ Trie.o: Trie.cpp Trie.h
 clean:
 	rm -rf *.o
 	rm -rf TrieTest.out
+	rm -rf TrieTests.out
 
 # TrieTest: ./build/TrieTest.o ./build/Trie.o
 # 	$(CC) $(FLAGS) -o ./bin/TrieTest.out $(BUILDDIR)/TrieTest.o $(BUILDDIR)/Trie.o
