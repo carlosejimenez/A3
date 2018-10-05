@@ -24,3 +24,18 @@ Trie.o: Trie.cpp Trie.h
 clean:
 	rm -rf *.o
 	rm -rf TrieTest.out
+
+# TrieTest: ./build/TrieTest.o ./build/Trie.o
+# 	$(CC) $(FLAGS) -o ./bin/TrieTest.out $(BUILDDIR)/TrieTest.o $(BUILDDIR)/Trie.o
+#
+# $(BUILDDIR)/TrieTest.o: TrieTest.cpp
+# 	mkdir -p $(BUILDDIR)
+# 	$(CC) $(FLAGS) -c TrieTest.cpp
+#
+# $(BUILDDIR)/Trie.o: Trie.cpp Trie.h
+# 	mkdir -p $(BUILDDIR)
+# 	$(CC) $(FLAGS) -c Trie.cpp
+#
+# clean:
+# 	rm -rf $(BUILDDIR)/*.o
+# 	rm -rf $(BUILDDIR)/TrieTest.out
